@@ -7,10 +7,8 @@ import 'package:flutter/material.dart';
 import 'dart:math' show pi, cos, sin;
 
 const defaultGraphColors = [
-  Colors.green,
-  Colors.blue,
-  Colors.red,
-  Colors.orange,
+  Colors.grey,
+  Colors.amber,
 ];
 
 class RadarChart extends StatefulWidget {
@@ -31,7 +29,8 @@ class RadarChart extends StatefulWidget {
     required this.features,
     required this.data,
     this.reverseAxis = false,
-    this.ticksTextStyle = const TextStyle(color: Colors.grey, fontSize: 12),
+    this.ticksTextStyle =
+        const TextStyle(color: Colors.transparent, fontSize: 12),
     this.featuresTextStyle = const TextStyle(color: Colors.black, fontSize: 16),
     this.outlineColor = Colors.black,
     this.axisColor = Colors.grey,
@@ -59,7 +58,7 @@ class RadarChart extends StatefulWidget {
     required List<String> features,
     required List<List<int>> data,
     bool reverseAxis = false,
-    bool useSides = false,
+    bool useSides = true,
   }) {
     return RadarChart(
         ticks: ticks,
@@ -211,7 +210,7 @@ class RadarChartPainter extends CustomPainter {
       ..strokeWidth = 1.0
       ..isAntiAlias = true;
 
-    canvas.drawPath(variablePath(size, radius, this.sides), outlinePaint);
+    // canvas.drawPath(variablePath(size, radius, this.sides), outlinePaint);
     // Painting the circles and labels for the given ticks (could be auto-generated)
     // The last tick is ignored, since it overlaps with the feature label
     var tickDistance = radius / (ticks.length);
@@ -233,7 +232,7 @@ class RadarChartPainter extends CustomPainter {
         .forEach((index, tick) {
       var tickRadius = tickDistance * (index + 1);
 
-      canvas.drawPath(variablePath(size, tickRadius, this.sides), ticksPaint);
+      // canvas.drawPath(variablePath(size, tickRadius, this.sides), ticksPaint);
 
       TextPainter(
         text: TextSpan(text: tick.toString(), style: ticksTextStyle),
@@ -254,7 +253,7 @@ class RadarChartPainter extends CustomPainter {
       var featureOffset =
           Offset(centerX + radius * xAngle, centerY + radius * yAngle);
 
-      canvas.drawLine(centerOffset, featureOffset, ticksPaint);
+      // canvas.drawLine(centerOffset, featureOffset, ticksPaint);
 
       var featureLabelFontHeight = featuresTextStyle.fontSize;
       var featureLabelFontWidth = featuresTextStyle.fontSize! - 5;
@@ -277,7 +276,7 @@ class RadarChartPainter extends CustomPainter {
     // Painting each graph
     data.asMap().forEach((index, graph) {
       var graphPaint = Paint()
-        ..color = graphColors[index % graphColors.length].withOpacity(0.3)
+        ..color = graphColors[index % graphColors.length].withOpacity(0.40)
         ..style = PaintingStyle.fill;
 
       var graphOutlinePaint = Paint()
