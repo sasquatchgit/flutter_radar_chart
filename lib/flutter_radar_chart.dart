@@ -9,6 +9,7 @@ import 'dart:math' show pi, cos, sin;
 const defaultGraphColors = [
   Colors.grey,
   Colors.amber,
+  Colors.yellow,
 ];
 
 class RadarChart extends StatefulWidget {
